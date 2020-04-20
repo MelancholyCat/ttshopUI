@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    // "baseUrl": "http://203.195.219.146:8080/",
     "paths": {
         "@/*": ["src/*"]
     }

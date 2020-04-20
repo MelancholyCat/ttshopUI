@@ -123,17 +123,17 @@ export default {
     //   this.$router.push("/shop/commodity/add");
     // },
     editstandards(id){
-      this.$router.push("/shop/standard/index/" + id);
+      this.$router.push("/standard/index/" + id);
     },
     editcommodity(id) {
-      this.$router.push("/shop/commodity/edit/" + id);
+      this.$router.push("/commodity/edit/" + id);
     },
     deletecommodity(id) {
       var vm = this;
       this.axios({
         method: "GET",
-        // url: "http://localhost:8080/commodity/delete/" + id
-        url:"https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/delete/"+id
+        url: "http://203.195.219.146:8080/commodity/delete/" + id
+        // url:"https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/delete/"+id
       }).then(function(resp) {
         if (resp.data.code == 200) {
           // 弹框
@@ -147,8 +147,8 @@ export default {
         }
         vm.axios({
           method: "GET",
-          // url: "http://localhost:8080/commodity/list"
-          url:"https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/list"
+          url: "http://203.195.219.146:8080/commodity/list"
+          // url:"https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/list"
         }).then(function(resp) {
           vm.list = resp.data.data;
         });
@@ -159,16 +159,16 @@ export default {
       if (vm.radio == "all") {
         this.axios({
           method: "GET",
-          // url: "http://localhost:8080/commodity/list"
-          url:"https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/list"
+          url: "http://203.195.219.146:8080/commodity/list"
+          // url:"https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/list"
         }).then(function(resp) {
           vm.list = resp.data.data;
         });
       } else {
         this.axios({
           method: "GET",
-          // url: "http://localhost:8080/commodity/list/" + vm.radio
-          url:"https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/list/"+ vm.radio
+          url: "http://203.195.219.146:8080/commodity/list/" + vm.radio
+          // url:"https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/list/"+ vm.radio
         }).then(function(resp) {
           if (resp.data.code == 200) {
             vm.list = resp.data.data;
@@ -182,8 +182,8 @@ export default {
       var vm = this;
       this.axios({
         method: "GET",
-        // url: "http://localhost:8080/commodity/list"
-        url:"https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/list"
+        url: "http://203.195.219.146:8080/commodity/list"
+        // url:"https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/list"
       }).then(function(resp) {
         if (resp.data.code == 200) {
           vm.list = resp.data.data;

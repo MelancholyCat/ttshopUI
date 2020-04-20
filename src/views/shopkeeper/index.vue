@@ -119,7 +119,7 @@ export default {
       this.axios({
         method: "GET",
         url:
-          "http://localhost:8080/shopkeeper/delete/" +
+          "http://203.195.219.146:8080/shopkeeper/delete/" +
           id
       }).then(function(resp) {
         if (resp.data.code == 200) {
@@ -134,7 +134,7 @@ export default {
         }
         vm.axios({
           method: "GET",
-          url: "http://localhost:8080/shopkeeper/list"
+          url: "http://203.195.219.146:8080/shopkeeper/list"
         }).then(function(resp) {
           vm.list = resp.data.data;
         });
@@ -145,14 +145,14 @@ export default {
       if (vm.radio == "all") {
         this.axios({
           method: "GET",
-          url: "http://localhost:8080/shopkeeper/list"
+          url: "http://203.195.219.146:8080/shopkeeper/list"
         }).then(function(resp) {
           vm.list = resp.data.data;
         });
       } else {
         this.axios({
           method: "GET",
-          url: "http://localhost:8080/shopkeeper/list/" + vm.radio
+          url: "http://203.195.219.146:8080/shopkeeper/list/" + vm.radio
         }).then(function(resp) {
           if (resp.data.code == 200) {
             vm.list = resp.data.data;
@@ -166,7 +166,7 @@ export default {
       var vm = this;
       this.axios({
         method: "GET",
-        url: "http://localhost:8080/shopkeeper/list"
+        url: "http://203.195.219.146:8080/shopkeeper/list"
       }).then(function(resp) {
         if (resp.data.code == 200) {
           vm.list = resp.data.data;

@@ -1,29 +1,32 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="shopkeeper" label-width="120px">
-      <el-form-item label="姓名">
-        <el-input v-model="shopkeeper.name" placeholder="请输入内容"/>
+    <el-form ref="form" :model="type" label-width="120px">
+      <!-- <el-form-item label="ID">
+        <el-input v-model="type.id" disabled size="small" />
+      </el-form-item> -->
+      <el-form-item label="商品品类名">
+        <el-input v-model="type.name" />
       </el-form-item>
-      <el-form-item label="头像">
-        <div class="demo-image">
-          <el-upload
-            class="avatar-uploader"
-            action="http://localhost:8080/picture/upload"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img v-if="imgUrl" :src="imgUrl" class="avatar" />
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </div>
+      <el-form-item  label="父品类ID">
+        <el-select v-model="type.parent" filterable placeholder="请选择商品品类" >
+            <el-option
+              v-for="item in types"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
       </el-form-item>
-      <el-form-item label="密码" placeholder="123456">
-        <el-input v-model="shopkeeper.password" maxlength="32" show-password clearable />
-      </el-form-item>
+      
+      <!-- <el-form-item label="是否注销">
+        <template>
+          <el-radio v-model="type.is_delete" label="alive">alive</el-radio>
+          <el-radio v-model="type.is_delete" label="deleted">deleted</el-radio>
+        </template>
+      </el-form-item> -->
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">Submit</el-button>
-        <el-button @click="onCancel">Cancel</el-button>
+        <el-button type="primary" @click="onSubmit">提交</el-button>
+        <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -61,70 +64,55 @@ import Qs from "qs";
 
 export default {
   created() {
-    this.fatchData();
+    this.fatchDataById();
   },
   data() {
     return {
+      // urlheads: ["https://", "http://"],
       fits: ["fill", "contain", "cover", "none", "scale-down"],
-      imgUrl:'',
-      shopkeeper: {
-        "id":"",
+      imgUrl:"",
+      type: {
+        "id": "",
         "name": "",
-        "pic_url": "",
-        "password": "",
-        "created_time":"",
-        "update_time":"",
-        "is_delete":"alive"
-      }
+        "create_time": "",
+        "update_time": "",
+        "is_delete": "alive"
+      },
+      types:null,
     };
   },
   methods: {
-    handleAvatarSuccess(resp,file) {
-      this.shopkeeper.pic_url = resp.data;
-      this.imgUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
-    },
-    fatchData() {
-
+    fatchDataById() {
+      var vm = this;
+      this.axios({
+        method: "GET",
+        // url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity-type/alivelist"
+        url: "http://203.195.219.146:8080/commodity-type/list/alive",
+      }).then(function(resp) {
+        vm.types = resp.data.data;
+      });
     },
     onSubmit() {
       var vm = this;
       this.axios({
         method: "POST",
-        url:
-          "http://localhost:8080/shopkeeper/add",
-        data: vm.shopkeeper
+        // url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity-type/add"
+        url: "http://203.195.219.146:8080/commodity-type/add",
+        data: vm.type
       }).then(function(resp) {
         if (resp.data.code == 200) {
-          vm.$notify({
-            title: '成功',
-            message: "添加编号为" + resp.data.data + "的店主信息成功",
-            type: 'success'
+          vm.$message({
+            message: "添加" + vm.type.id + "信息成功",
+            type: "success"
           });
-          // vm.$message({
-          // message: '恭喜你，这是一条成功消息',
-          // type: 'success'
-          // });
-          vm.$router.push("/shopkeeper");
-          vm.$message("头像更新较慢，请耐心等候");
-        } else {
-          vm.$message.error("添加编号为" + resp.data.data + "的店主信息失败");
+          vm.$router.push("/commodity-type/index");
+        }else{
+          vm.$message.error("添加新的商品品类信息失败");
         }
       });
     },
     onCancel() {
-      this.$router.push("/shop/shopkeeper/index");
+      this.$router.push("/commodity-type/index");
     }
   }
 };

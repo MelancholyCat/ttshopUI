@@ -8,7 +8,7 @@
         <div class="demo-image">
           <el-upload
             class="avatar-uploader"
-            action="http://localhost:8080/picture/upload"
+            action="http://203.195.219.146:8080/picture/upload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -103,7 +103,7 @@ export default {
       this.axios({
         method: "POST",
         url:
-          "http://localhost:8080/shopkeeper/add",
+          "http://203.195.219.146:8080/shopkeeper/add",
         data: vm.shopkeeper
       }).then(function(resp) {
         if (resp.data.code == 200) {
@@ -116,7 +116,7 @@ export default {
           // message: '恭喜你，这是一条成功消息',
           // type: 'success'
           // });
-          vm.$router.push("/shopkeeper");
+          vm.$router.push("/shop/shopkeeper/index");
           vm.$message("头像更新较慢，请耐心等候");
         } else {
           vm.$message.error("添加编号为" + resp.data.data + "的店主信息失败");

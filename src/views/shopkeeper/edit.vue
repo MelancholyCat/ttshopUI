@@ -11,7 +11,7 @@
         <div class="demo-image">
           <el-upload
             class="avatar-uploader"
-            action="http://localhost:8080/picture/upload"
+            action="http://203.195.219.146:8080/picture/upload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -110,7 +110,7 @@ export default {
       this.axios({
         method: "GET",
         url:
-          "http://localhost:8080/shopkeeper/" +
+          "http://203.195.219.146:8080/shopkeeper/" +
           id
       }).then(function(resp) {
         vm.shopkeeper = resp.data.data;
@@ -122,7 +122,7 @@ export default {
       this.axios({
         method: "POST",
         url:
-          "http://localhost:8080/shopkeeper/update",
+          "http://203.195.219.146:8080/shopkeeper/update",
         data: vm.shopkeeper
       }).then(function(resp) {
         if (resp.data.code == 200) {

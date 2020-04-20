@@ -11,7 +11,7 @@
         <div class="demo-image">
           <el-upload
             class="avatar-uploader"
-            action="http://localhost:8080/picture/upload"
+            action="http://203.195.219.146:8080/picture/upload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -84,7 +84,8 @@ export default {
     var vm = this;
     this.axios({
       method: "GET",
-      url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity-type/alivelist"
+      // url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity-type/alivelist"
+      url: "http://203.195.219.146:8080/commodity-type/list/alive"
     }).then(function(resp) {
       vm.types = resp.data.data;
     });
@@ -120,8 +121,8 @@ export default {
       var vm = this;
       this.axios({
         method: "GET",
-        // url: "http://localhost:8080/commodity/" + id
-        url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/"+id
+        url: "http://203.195.219.146:8080/commodity/" + id
+        // url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/"+id
       }).then(function(resp) {
         vm.commodity = resp.data.data;
         vm.imgUrl = vm.commodity.pic_url;
@@ -131,8 +132,8 @@ export default {
       var vm = this;
       this.axios({
         method: "POST",
-        // url: "http://localhost:8080/commodity/update",
-        url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/update",
+        url: "http://203.195.219.146:8080/commodity/update",
+        // url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity/update",
         data: vm.commodity
       }).then(function(resp) {
         if (resp.data.code == 200) {
@@ -140,14 +141,14 @@ export default {
             message: "修改" + vm.commodity.id + "信息成功",
             type: "success"
           });
-          vm.$router.push("/shop/commodity/index");
+          vm.$router.push("/commodity/index");
         }else{
           vm.$message.error("更新编号为" + vm.commodity.id + "的店主信息失败");
         }
       });
     },
     onCancel() {
-      this.$router.push("/shop/commodity/index");
+      this.$router.push("/commodity/index");
     }
   }
 };

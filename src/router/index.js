@@ -46,13 +46,69 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'TT后台', icon: 'dashboard' }
-    }]
+    // redirect: '/dashboard',
+    redirect: '/commodity/index',
+    children: [
+      {
+        path: 'commodity/index',
+        name: 'Table',
+        component: () => import('@/views/commodity/index'),
+        meta: { title: '商品列表', icon: 'table' }
+      },
+      {
+        path: 'commodity/edit/:id',
+        hidden: true,
+        component: () => import('@/views/commodity/edit/'),
+        meta: { title: '编辑商品信息', icon: 'form' }
+      },
+      {
+        path: 'standard/index/:id',
+        hidden: true,
+        component: () => import('@/views/commodity/standard/index'),
+        meta: { title: '设置商品规格', icon: 'form' }
+      },
+      {
+        path: 'standard/add/:id',
+        hidden: true,
+        component: () => import('@/views/commodity/standard/add'),
+        meta: { title: '添加商品规格', icon: 'form' }
+      },
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        hidden: true,
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: 'TT后台', icon: 'dashboard' }
+      }
+    ]
+  },
+
+  {
+    path: '/commodity-type',
+    // hidden: true,
+    component: Layout,
+    redirect: '/commodity-type/index',
+    name: 'Example',
+    // meta: { title: '商家管理', icon: 'example' },
+    children:[
+      {
+        path: 'index',
+        component: () => import('@/views/commodity/type/index'),
+        meta: { title: '商品种类列表', icon: 'table' }
+      },
+      {
+        path: 'edit/:id',
+        hidden: true,
+        component: () => import('@/views/commodity/type/edit/'),
+        meta: { title: '编辑商品种类', icon: 'taformble' }
+      },
+      {
+        path: 'add',
+        hidden: true,
+        component: () => import('@/views/commodity/type/add'),
+        meta: { title: '添加商品种类', icon: 'taformble' }
+      },
+    ]
   },
 
   {
@@ -90,23 +146,56 @@ export const constantRoutes = [
         path: 'store/edit/:id',
         hidden: true,
         component: () => import('@/views/store/edit/'),
-        meta: { title: '编辑店铺信息', icon: 'form' }
-      },{
-        path: 'commodity/index',
-        name: 'Table',
-        component: () => import('@/views/commodity/index'),
-        meta: { title: '商品列表', icon: 'table' }
-      },{
-        path: 'commodity/edit/:id',
-        hidden: true,
-        component: () => import('@/views/commodity/edit/'),
-        meta: { title: '编辑商品信息', icon: 'form' }
-      },{
-        path: 'standard/index/:id',
-        hidden: true,
-        component: () => import('@/views/commodity/standard/index'),
-        meta: { title: '设置商品规格', icon: 'form' }
+        meta: { title: '编辑店铺信息', icon: 'form' },
       },
+      {
+        path: 'sales/index',
+        hidden: true,
+        component: () => import('@/views/sales/index'),
+        meta: { title: '商品销售情况统计', icon: 'table' }
+      },
+      // {
+      //   path: 'standard/index/:id',
+      //   hidden: true,
+      //   component: () => import('@/views/commodity/standard/index'),
+      //   meta: { title: '设置商品规格', icon: 'form' }
+      // },
+      // {
+      //   path: 'standard/add/:id',
+      //   hidden: true,
+      //   component: () => import('@/views/commodity/standard/add'),
+      //   meta: { title: '添加商品规格', icon: 'form' }
+      // },
+      
+      // {
+      //   path: 'commodity/type/index',
+      //   component: () => import('@/views/commodity/type/index'),
+      //   meta: { title: '商品种类列表', icon: 'table' }
+      // },
+      // {
+      //   path: 'commodity/type/edit/:id',
+      //   hidden: true,
+      //   component: () => import('@/views/commodity/type/edit/'),
+      //   meta: { title: '编辑商品种类', icon: 'taformble' }
+      // },
+      // {
+      //   path: 'commodity/type/add',
+      //   hidden: true,
+      //   component: () => import('@/views/commodity/type/add'),
+      //   meta: { title: '添加商品种类', icon: 'taformble' }
+      // },
+      // {
+      //   path: 'commodity/index',
+      //   name: 'Table',
+      //   component: () => import('@/views/commodity/index'),
+      //   meta: { title: '商品列表', icon: 'table' }
+      // },
+      // {
+      //   path: 'commodity/edit/:id',
+      //   hidden: true,
+      //   component: () => import('@/views/commodity/edit/'),
+      //   meta: { title: '编辑商品信息', icon: 'form' }
+      // },
       // {
       //   path: 'commodity/add',
       //   hidden: true,
@@ -115,9 +204,25 @@ export const constantRoutes = [
       // },
       // {
       //   path: 'commodity/type/index',
-      //   name: 'Table',
       //   component: () => import('@/views/commodity/type/index'),
       //   meta: { title: '商品种类列表', icon: 'table' }
+      // },
+      // {
+      //   path: 'commodity/type/edit/:id',
+      //   hidden: true,
+      //   component: () => import('@/views/commodity/type/edit/'),
+      //   meta: { title: '编辑商品种类', icon: 'taformble' }
+      // },
+      // {
+      //   path: 'commodity/type/add',
+      //   hidden: true,
+      //   component: () => import('@/views/commodity/type/add'),
+      //   meta: { title: '添加商品种类', icon: 'taformble' }
+      // },
+      // {
+      //   path: 'sales/index',
+      //   component: () => import('@/views/sales/index'),
+      //   meta: { title: '商品销售情况统计', icon: 'table' }
       // },
     ]
   },
