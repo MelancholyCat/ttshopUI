@@ -107,18 +107,40 @@ export const constantRoutes = [
         component: () => import('@/views/commodity/standard/index'),
         meta: { title: '设置商品规格', icon: 'form' }
       },
+      {
+        path: 'standard/add/:id',
+        hidden: true,
+        component: () => import('@/views/commodity/standard/add'),
+        meta: { title: '添加商品规格', icon: 'form' }
+      },
       // {
       //   path: 'commodity/add',
       //   hidden: true,
       //   component: () => import('@/views/commodity/add'),
       //   meta: { title: '添加商品信息', icon: 'form' }
       // },
-      // {
-      //   path: 'commodity/type/index',
-      //   name: 'Table',
-      //   component: () => import('@/views/commodity/type/index'),
-      //   meta: { title: '商品种类列表', icon: 'table' }
-      // },
+      {
+        path: 'commodity/type/index',
+        component: () => import('@/views/commodity/type/index'),
+        meta: { title: '商品种类列表', icon: 'table' }
+      },
+      {
+        path: 'commodity/type/edit/:id',
+        hidden: true,
+        component: () => import('@/views/commodity/type/edit/'),
+        meta: { title: '编辑商品种类', icon: 'taformble' }
+      },
+      {
+        path: 'commodity/type/add',
+        hidden: true,
+        component: () => import('@/views/commodity/type/add'),
+        meta: { title: '添加商品种类', icon: 'taformble' }
+      },
+      {
+        path: 'sales/index',
+        component: () => import('@/views/sales/index'),
+        meta: { title: '商品销售情况统计', icon: 'table' }
+      },
     ]
   },
   

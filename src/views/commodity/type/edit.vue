@@ -1,38 +1,32 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="shopkeeper" label-width="120px">
+    <el-form ref="form" :model="type" label-width="120px">
       <el-form-item label="ID">
-        <el-input v-model="shopkeeper.id" disabled size="small" />
+        <el-input v-model="type.id" disabled size="small" />
       </el-form-item>
-      <el-form-item label="姓名">
-        <el-input v-model="shopkeeper.name" />
+      <el-form-item label="商品品类名">
+        <el-input v-model="type.name" />
       </el-form-item>
-      <el-form-item label="头像">
-        <div class="demo-image">
-          <el-upload
-            class="avatar-uploader"
-            action="http://localhost:8080/picture/upload"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img v-if="imgUrl" :src="imgUrl" class="avatar" />
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </div>
+      <el-form-item  label="父品类ID">
+        <el-select v-model="type.parent" filterable placeholder="请选择商品品类" >
+            <el-option
+              v-for="item in types"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
       </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="shopkeeper.password" maxlength="32" show-password clearable />
-      </el-form-item>
+      
       <el-form-item label="是否注销">
         <template>
-          <el-radio v-model="shopkeeper.is_delete" label="alive">alive</el-radio>
-          <el-radio v-model="shopkeeper.is_delete" label="deleted">deleted</el-radio>
+          <el-radio v-model="type.is_delete" label="alive">alive</el-radio>
+          <el-radio v-model="type.is_delete" label="deleted">deleted</el-radio>
         </template>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">Submit</el-button>
-        <el-button @click="onCancel">Cancel</el-button>
+        <el-button type="primary" @click="onSubmit">提交</el-button>
+        <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -71,73 +65,62 @@ import Qs from "qs";
 export default {
   created() {
     this.fatchDataById();
+    var vm = this;
+    this.axios({
+      method: "GET",
+      url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity-type/alivelist"
+    }).then(function(resp) {
+      vm.types = resp.data.data;
+    });
   },
   data() {
     return {
       // urlheads: ["https://", "http://"],
       fits: ["fill", "contain", "cover", "none", "scale-down"],
       imgUrl:"",
-      shopkeeper: {
+      type: {
         "id": "",
-        "password": "",
-        "pic_url": "",
         "name": "",
         "create_time": "",
         "update_time": "",
         "is_delete": ""
-      }
+      },
+      types:null,
     };
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.shopkeeper.pic_url = res.data;
-      this.imgUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
-    },
     fatchDataById() {
       var id = this.$route.params.id;
       var vm = this;
       this.axios({
         method: "GET",
-        url:
-          "http://localhost:8080/shopkeeper/" +
-          id
+        // url: "http://localhost:8080/commodity-type/" + id
+        url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity-type/" + id
       }).then(function(resp) {
-        vm.shopkeeper = resp.data.data;
-        vm.imgUrl = vm.shopkeeper.pic_url;
+        vm.type = resp.data.data;
       });
     },
     onSubmit() {
       var vm = this;
       this.axios({
         method: "POST",
-        url:
-          "http://localhost:8080/shopkeeper/update",
-        data: vm.shopkeeper
+        url: "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/commodity-type/update"
+        // url: "http://localhost:8080/type/update",
+        // data: vm.type
       }).then(function(resp) {
         if (resp.data.code == 200) {
           vm.$message({
-            message: "修改" + vm.shopkeeper.id + "信息成功",
+            message: "修改" + vm.type.id + "信息成功",
             type: "success"
           });
-          vm.$router.push("/shop/shopkeeper/index");
+          vm.$router.push("/shop/commodity/type/index");
         }else{
-          vm.$message.error("更新编号为" + vm.shopkeeper.id + "的店主信息失败");
+          vm.$message.error("更新编号为" + vm.type.id + "的商品品类信息失败");
         }
       });
     },
     onCancel() {
-      this.$router.push("/shop/shopkeeper/index");
+      this.$router.push("/shop/commodity/type/index");
     }
   }
 };

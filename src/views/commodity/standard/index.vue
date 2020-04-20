@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row type="flex" justify="end">
-      <el-button type="primary" round @click="addstandard()">添加商品规格</el-button>
+      <el-button type="primary" round @click="addstandard(commodity_id)">添加商品规格</el-button>
     </el-row>
     <el-row>
       <el-radio v-model="radio" label="all" @change="select">所有规格</el-radio>
@@ -157,6 +157,7 @@ export default {
       list: null,
       listLoading: true,
       radio: "all",
+      commodity_id:null,
       fits: ["fill", "contain", "cover", "none", "scale-down"]
     };
   },
@@ -185,7 +186,7 @@ export default {
           vm.$router.push("/shop/standard/index/" + standard.commodity_id);
           standard.edit = false;
         } else {
-          vm.$message.error("更新编号为" + standard.id + "的店主信息失败");
+          vm.$message.error("更新编号为" + standard.id + "的商品规格失败");
         }
       });
       
@@ -193,8 +194,8 @@ export default {
     errorHandler() {
       return true;
     },
-    addstandard() {
-      this.$router.push("/shop/standard/add");
+    addstandard(id) {
+      this.$router.push("/shop/standard/add/" + id);
     },
     // editstandards(id){
     //   this.$router.push("/shop/standard/index/" + id);
@@ -212,12 +213,12 @@ export default {
         if (resp.data.code == 200) {
           // 弹框
           vm.$message({
-            message: "删除编号为" + id + "的店主信息成功",
+            message: "删除编号为" + id + "的商品规格成功",
             type: "success"
           });
         } else {
           // 弹框
-          vm.$message.error("删除编号为" + id + "的店主信息失败");
+          vm.$message.error("删除编号为" + id + "的商品规格失败");
         }
         vm.axios({
           method: "GET",
@@ -235,7 +236,7 @@ export default {
           method: "GET",
           // url: "http://localhost:8080/standard/list"
           url:
-            "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/standard/list"
+            "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/standard/list/"+vm.commodity_id
         }).then(function(resp) {
           vm.list = resp.data.data;
         });
@@ -244,8 +245,8 @@ export default {
           method: "GET",
           // url: "http://localhost:8080/standard/list/" + vm.radio
           url:
-            "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/standard/list/" +
-            vm.radio
+            "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/standard/list/" +vm.radio+"/"+vm.commodity_id
+            
         }).then(function(resp) {
           if (resp.data.code == 200) {
             vm.list = resp.data.data;
@@ -256,14 +257,13 @@ export default {
       }
     },
     fetchData() {
-      var id = this.$route.params.id;
+      this.commodity_id = this.$route.params.id;
       var vm = this;
       this.axios({
         method: "GET",
         // url: "http://localhost:8080/standard/list"
         url:
-          "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/standard/list/" +
-          id
+          "https://www.fastmock.site/mock/06c8be06c16b30764c466badda582793/ttshop/standard/list/" + vm.commodity_id
       }).then(function(resp) {
         if (resp.data.code == 200) {
           vm.list = resp.data.data;
