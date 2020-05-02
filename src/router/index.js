@@ -154,6 +154,12 @@ export const constantRoutes = [
         component: () => import('@/views/sales/index'),
         meta: { title: '商品销售情况统计', icon: 'table' }
       },
+      {
+        path: 'standard/add/:id',
+        hidden: true,
+        component: () => import('@/views/commodity/standard/add'),
+        meta: { title: '添加商品规格', icon: 'form' }
+      },
       // {
       //   path: 'standard/index/:id',
       //   hidden: true,
