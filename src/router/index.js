@@ -53,7 +53,7 @@ export const constantRoutes = [
         path: 'commodity/index',
         name: 'Table',
         component: () => import('@/views/commodity/index'),
-        meta: { title: '商品列表', icon: 'table' }
+        meta: { title: '商品列表', icon: 'excel' }
       },
       {
         path: 'commodity/edit/:id',
@@ -229,6 +229,34 @@ export const constantRoutes = [
       //   path: 'sales/index',
       //   component: () => import('@/views/sales/index'),
       //   meta: { title: '商品销售情况统计', icon: 'table' }
+      // },
+    ]
+  },
+
+  {
+    path: '/order',
+    // hidden: true,
+    component: Layout,
+    redirect: '/order/index',
+    name: 'Example',
+    // meta: { title: '商家管理', icon: 'example' },
+    children:[
+      {
+        path: 'index',
+        component: () => import('@/views/order/index'),
+        meta: { title: '订单列表', icon: 'money' }
+      },
+      {
+        path: 'edit/:id',
+        hidden: true,
+        component: () => import('@/views/order/edit/'),
+        meta: { title: '编辑订单', icon: 'taformble' }
+      },
+      // {
+      //   path: 'add',
+      //   hidden: true,
+      //   component: () => import('@/views/order/add'),
+      //   meta: { title: '添加商品种类', icon: 'taformble' }
       // },
     ]
   },
